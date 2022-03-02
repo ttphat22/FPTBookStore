@@ -10,107 +10,116 @@ using FPTBOOK_1670_.Models;
 
 namespace FPTBOOK_1670_.Controllers
 {
-    public class CategoriesController : Controller
+    public class BooksController : Controller
     {
         private Model1 db = new Model1();
 
-        // GET: Categories
+        // GET: Books
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            var books = db.Books.Include(b => b.Author).Include(b => b.Category);
+            return View(books.ToList());
         }
 
-        // GET: Categories/Details/5
+        // GET: Books/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Book book = db.Books.Find(id);
+            if (book == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(book);
         }
 
-        // GET: Categories/Create
+        // GET: Books/Create
         public ActionResult Create()
         {
+            ViewBag.AuthorID = new SelectList(db.Authors, "AuthorID", "AuthorName");
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName");
             return View();
         }
 
-        // POST: Categories/Create
+        // POST: Books/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CategoryID,CategoryName,Description")] Category category)
+        public ActionResult Create([Bind(Include = "BookID,BookName,CategoryID,AuthorID,Quantity,Price,Image,UrlImage,ShortDesc,DetailDesc")] Book book)
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Add(category);
+                db.Books.Add(book);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(category);
+            ViewBag.AuthorID = new SelectList(db.Authors, "AuthorID", "AuthorName", book.AuthorID);
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", book.CategoryID);
+            return View(book);
         }
 
-        // GET: Categories/Edit/5
+        // GET: Books/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Book book = db.Books.Find(id);
+            if (book == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            ViewBag.AuthorID = new SelectList(db.Authors, "AuthorID", "AuthorName", book.AuthorID);
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", book.CategoryID);
+            return View(book);
         }
 
-        // POST: Categories/Edit/5
+        // POST: Books/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CategoryID,CategoryName,Description")] Category category)
+        public ActionResult Edit([Bind(Include = "BookID,BookName,CategoryID,AuthorID,Quantity,Price,Image,UrlImage,ShortDesc,DetailDesc")] Book book)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
+                db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(category);
+            ViewBag.AuthorID = new SelectList(db.Authors, "AuthorID", "AuthorName", book.AuthorID);
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", book.CategoryID);
+            return View(book);
         }
 
-        // GET: Categories/Delete/5
+        // GET: Books/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Book book = db.Books.Find(id);
+            if (book == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(book);
         }
 
-        // POST: Categories/Delete/5
+        // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
+            Book book = db.Books.Find(id);
+            db.Books.Remove(book);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

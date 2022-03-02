@@ -1,8 +1,8 @@
-﻿@model IEnumerable<FPTBOOK_1670_.Models.author>
+﻿@model IEnumerable<FPTBOOK_1670_.Models.Author>
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2>Index</h2>
@@ -13,13 +13,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.book.book_name)
+            @Html.DisplayNameFor(model => model.AuthorName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.aut_name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.aut_phone)
+            @Html.DisplayNameFor(model => model.Description)
         </th>
         <th></th>
     </tr>
@@ -27,18 +24,15 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.book.book_name)
+            @Html.DisplayFor(modelItem => item.AuthorName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.aut_name)
+            @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.aut_phone)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.aut_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.aut_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.aut_id })
+            @Html.ActionLink("Edit", "Edit", new { id=item.AuthorID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AuthorID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AuthorID })
         </td>
     </tr>
 }

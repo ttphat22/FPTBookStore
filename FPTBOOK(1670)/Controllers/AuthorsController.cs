@@ -10,107 +10,107 @@ using FPTBOOK_1670_.Models;
 
 namespace FPTBOOK_1670_.Controllers
 {
-    public class CategoriesController : Controller
+    public class AuthorsController : Controller
     {
         private Model1 db = new Model1();
 
-        // GET: Categories
+        // GET: Authors
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            return View(db.Authors.ToList());
         }
 
-        // GET: Categories/Details/5
+        // GET: Authors/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Author author = db.Authors.Find(id);
+            if (author == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(author);
         }
 
-        // GET: Categories/Create
+        // GET: Authors/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Categories/Create
+        // POST: Authors/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CategoryID,CategoryName,Description")] Category category)
+        public ActionResult Create([Bind(Include = "AuthorID,AuthorName,Description")] Author author)
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Add(category);
+                db.Authors.Add(author);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(category);
+            return View(author);
         }
 
-        // GET: Categories/Edit/5
+        // GET: Authors/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Author author = db.Authors.Find(id);
+            if (author == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(author);
         }
 
-        // POST: Categories/Edit/5
+        // POST: Authors/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CategoryID,CategoryName,Description")] Category category)
+        public ActionResult Edit([Bind(Include = "AuthorID,AuthorName,Description")] Author author)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
+                db.Entry(author).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return View(author);
         }
 
-        // GET: Categories/Delete/5
+        // GET: Authors/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Author author = db.Authors.Find(id);
+            if (author == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(author);
         }
 
-        // POST: Categories/Delete/5
+        // POST: Authors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
+            Author author = db.Authors.Find(id);
+            db.Authors.Remove(author);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
