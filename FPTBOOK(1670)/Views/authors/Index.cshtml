@@ -1,0 +1,46 @@
+﻿@model IEnumerable<FPTBOOK_1670_.Models.author>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.book.book_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.aut_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.aut_phone)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.book.book_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.aut_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.aut_phone)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.aut_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.aut_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.aut_id })
+        </td>
+    </tr>
+}
+
+</table>
