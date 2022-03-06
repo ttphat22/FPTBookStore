@@ -214,3 +214,5 @@ C:\Users\ASUS\Documents\CloneFPTBook\FPTBookStore\FPTBOOK(1670)\obj\Debug\FPTBOO
 C:\Users\ASUS\Documents\CloneFPTBook\FPTBookStore\FPTBOOK(1670)\obj\Debug\FPTBOOK(1670).csproj.CopyComplete
 C:\Users\ASUS\Documents\CloneFPTBook\FPTBookStore\FPTBOOK(1670)\obj\Debug\FPTBOOK(1670).dll
 C:\Users\ASUS\Documents\CloneFPTBook\FPTBookStore\FPTBOOK(1670)\obj\Debug\FPTBOOK(1670).pdb
+C:\Users\ASUS\Documents\CloneFPTBook\FPTBookStore\FPTBOOK(1670)\obj\Debug\FPTBOOK_1670_.Migrations.firstrun.resources
+C:\Users\ASUS\Documents\CloneFPTBook\FPTBookStore\FPTBOOK(1670)\obj\Debug\FPTBOOK(1670).csproj.GenerateResource.cache

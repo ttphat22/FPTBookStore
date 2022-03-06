@@ -27,10 +27,9 @@ namespace FPTBOOK_1670_.Models
 
         public int Price { get; set; }
 
-        [Required]
-        public byte[] Image { get; set; }
+        
 
-        [Required]
+      
         public string UrlImage { get; set; }
 
         [Required]

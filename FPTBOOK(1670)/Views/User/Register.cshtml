@@ -3,13 +3,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Register</h2>
-<table align="center">
+<h2 style="text-align:center;margin-bottom:20px;margin-top:20px;font-size:30px">Register</h2>
+<table align="center" style="margin-left:30%">
     @using (Html.BeginForm())
     {
         //dung moi ra dc form
         @Html.ValidationSummary(true)
-    <tr style="height:auto">
+    <tr style="height:50px">
         <td>
             Username:
         </td>
@@ -20,7 +20,7 @@
         
     </tr>
 
-    <tr>
+    <tr style="height:50px">
         <td>
             Full Name:
         </td>

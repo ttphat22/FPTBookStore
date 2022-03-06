@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -49,13 +50,31 @@ namespace FPTBOOK_1670_.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BookID,BookName,CategoryID,AuthorID,Quantity,Price,Image,UrlImage,ShortDesc,DetailDesc")] Book book)
+        public ActionResult Create([Bind(Include = "BookID,BookName,CategoryID,AuthorID,Quantity,Price,Image,UrlImage,ShortDesc,DetailDesc")] Book book, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
-                db.Books.Add(book);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (image != null && image.ContentLength > 0)
+                {
+                    string pic = Path.GetFileName(image.FileName);
+                    string path = Path.Combine(Server.MapPath("~/BookImage/"), pic);
+                    image.SaveAs(path);
+
+                    book.UrlImage = pic;
+                    db.Books.Add(book);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+               
+                    return View();
+                }
+
+                //db.Books.Add(book);
+                //db.SaveChanges();
+                //return RedirectToAction("Index");
             }
 
             ViewBag.AuthorID = new SelectList(db.Authors, "AuthorID", "AuthorName", book.AuthorID);
@@ -71,6 +90,9 @@ namespace FPTBOOK_1670_.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Book book = db.Books.Find(id);
+
+            Session["oldPath"] = "~/BookImage/" + book.UrlImage;
+
             if (book == null)
             {
                 return HttpNotFound();
@@ -85,13 +107,42 @@ namespace FPTBOOK_1670_.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BookID,BookName,CategoryID,AuthorID,Quantity,Price,Image,UrlImage,ShortDesc,DetailDesc")] Book book)
+        public ActionResult Edit([Bind(Include = "BookID,BookName,CategoryID,AuthorID,Quantity,Price,UrlImage,ShortDesc,DetailDesc")] Book book, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(book).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (image != null && image.ContentLength > 0)
+                {
+                    string pic = Path.GetFileName(image.FileName);
+                    string path = Path.Combine(Server.MapPath("~/BookImage/"), pic);
+                    string oldPath = Request.MapPath(Session["oldPath"].ToString());
+                    image.SaveAs(path);
+
+                    book.UrlImage = pic;
+
+                    db.Entry(book).State = EntityState.Modified;
+                    if (System.IO.File.Exists(oldPath))
+                    {
+                        System.IO.File.Delete(oldPath);
+                    }
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    db.Books.Attach(book);
+
+                    db.Entry(book).Property(a => a.BookName).IsModified = true;
+                    db.Entry(book).Property(a => a.AuthorID).IsModified = true;
+                    db.Entry(book).Property(a => a.CategoryID).IsModified = true;
+                    db.Entry(book).Property(a => a.Quantity).IsModified = true;
+                    db.Entry(book).Property(a => a.Price).IsModified = true;
+                    db.Entry(book).Property(a => a.ShortDesc).IsModified = true;
+                    db.Entry(book).Property(a => a.DetailDesc).IsModified = true;
+
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
             ViewBag.AuthorID = new SelectList(db.Authors, "AuthorID", "AuthorName", book.AuthorID);
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", book.CategoryID);
@@ -106,6 +157,7 @@ namespace FPTBOOK_1670_.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Book book = db.Books.Find(id);
+            Session["oldPath"] = "~/BookImage/" + book.UrlImage;
             if (book == null)
             {
                 return HttpNotFound();
@@ -118,8 +170,14 @@ namespace FPTBOOK_1670_.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
+            string oldPath = Request.MapPath(Session["oldPath"].ToString());
+
             Book book = db.Books.Find(id);
             db.Books.Remove(book);
+            if (System.IO.File.Exists(oldPath))
+            {
+                System.IO.File.Delete(oldPath);
+            }
             db.SaveChanges();
             return RedirectToAction("Index");
         }
