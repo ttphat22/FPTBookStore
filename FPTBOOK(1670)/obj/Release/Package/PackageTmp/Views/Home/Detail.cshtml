@@ -1,0 +1,26 @@
+﻿@model FPTBOOK_1670_.Models.Book
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+<div class="about-group">
+    <div class="about-top">
+        <div class="grid images_3_of_1">
+            <img src="~/BookImage/@Model.UrlImage" alt="" />
+        </div>
+        <div class="grid span_2_of_3">
+            <h2 style="font-size:30px">@Model.BookName</h2>
+            <h3 style="color:black">Author: @Model.Author.AuthorName</h3>
+            <h3 style="color:black">Category: @Model.Category.CategoryName</h3>
+            <h3 style="color:black;text-align:justify">Description: @Model.DetailDesc</h3>
+            <h3 style="color:black">Price: $ @Model.Price</h3>
+        </div><div class="clear"></div>
+
+    </div>
+    
+    

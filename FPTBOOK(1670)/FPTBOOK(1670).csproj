@@ -192,6 +192,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BookImage\pic16.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -340,10 +341,10 @@
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\User\Update.cshtml" />
     <Content Include="Views\User\ChangePass.cshtml" />
+    <Content Include="Views\Home\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="BookImage\" />
     <Folder Include="Views\Customer\" />
   </ItemGroup>
   <ItemGroup>

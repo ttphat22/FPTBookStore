@@ -24,6 +24,12 @@ namespace FPTBOOK_1670_.Controllers
             return View();
         }
 
+        public ActionResult Detail(string id)
+        {
+            var book = db.Books.ToList().Find(b=>b.BookID == id);
+            return View(book);
+        }
+
         public ActionResult Search(string Search)
         {
             var books = db.Books.ToList().Where(s => s.BookName.ToUpper().Contains(Search.ToUpper()) ||
