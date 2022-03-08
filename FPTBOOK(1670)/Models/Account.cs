@@ -16,9 +16,29 @@ namespace FPTBOOK_1670_.Models
         [StringLength(50)]
         public string Fullname { get; set; }
 
-        [Required]
+       
         [StringLength(50)]
         public string Password { get; set; }
+
+
+        [NotMapped]
+        [DataType(DataType.Password)]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Display(Name = "Current Password")]
+        public string CurrentPassword { get; set; }
+
+        [NotMapped]
+        [DataType(DataType.Password)]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Display(Name = "New Password")]
+        public string NewPassword { get; set; }
+
+        [NotMapped]
+        [DataType(DataType.Password)]
+        [Compare("NewPassword", ErrorMessage = "The new password and confirmation new password do not match.")]
+        [Display(Name = "Confirm New Password")]
+        public string ConfirmNewPassword { get; set; }
+
 
         [Required]
         [StringLength(50)]

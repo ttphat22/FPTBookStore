@@ -30,7 +30,7 @@
                                 }
                                 else
                                 {
-                                    <li class="last"><div class="button-t"><span>@Html.ActionLink("Hello " + Session["Username"],"Update","Customer")</span></div></li>
+                                    <li class="last"><div class="button-t"><span>@Html.ActionLink("Hello " + Session["Username"],"Update","User")</span></div></li>
                                     <li class="last"><div class="button-t"><span>@Html.ActionLink("Logout","Logout","User")</span></div></li>
 
                                 }
@@ -50,8 +50,15 @@
                                 <a href="index.html"><img src="images/logo.png" alt="" /></a>
                             </div>
                             <div class="search">
-                                <input type="text" class="textbox" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}">
-                                <button class="gray-button"><span>Search</span></button>
+                                @using (Html.BeginForm("Search", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                                {
+                                    @Html.TextBox("Search", "", new { placeholder = "  Search...", @style = "border-radius:20px" });
+
+                                    <button class="gray-button" type="submit" style="background-color: #fff; border: none; margin-left: -42px; border-radius: 100%">Search</button>
+                                }
+
+                                
+
                             </div>
                             <div class="clear"></div>
                         </div>
