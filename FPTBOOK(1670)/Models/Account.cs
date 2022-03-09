@@ -1,3 +1,4 @@
+
 namespace FPTBOOK_1670_.Models
 {
     using System;
@@ -53,5 +54,7 @@ namespace FPTBOOK_1670_.Models
         public string Address { get; set; }
 
         public int State { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

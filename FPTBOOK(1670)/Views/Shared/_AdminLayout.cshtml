@@ -12,7 +12,7 @@
 
 
     <link rel="stylesheet" type="text/css" href="~/Content/styleasm1633.css" />
-    
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -38,8 +38,8 @@
                                 }
                                 else
                                 {
-                                    <li class="last"><div class="button-t"><span>@Html.ActionLink("Hello " + Session["Admin"],"Update","Customer")</span></div></li>
-                                    <li class="last"><div class="button-t"><span>@Html.ActionLink("Logout","Logout","User")</span></div></li>
+                                    <li class="last"><div class="button-t"><span>@Html.ActionLink("Hello " + Session["Admin"], "Update", "Customer")</span></div></li>
+                                    <li class="last"><div class="button-t"><span>@Html.ActionLink("Logout", "Logout", "User")</span></div></li>
 
                                 }
                             </ul>
@@ -70,7 +70,7 @@
                                 <li><a href="@Url.Action("Index","Categories")">Category management</a></li>
                                 <li><a href="@Url.Action("Index","Authors")">Author management</a></li>
                                 <li><a href="@Url.Action("Index","Books")">Book management</a></li>
-                                
+                                <li><a href="@Url.Action("Index","Orders")">Orders management</a></li>
                             </ul>
                             <div class="clear"></div>
                         </div>

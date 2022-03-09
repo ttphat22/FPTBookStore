@@ -27,9 +27,9 @@ namespace FPTBOOK_1670_.Models
 
         public int Price { get; set; }
 
-        
 
-      
+
+
         public string UrlImage { get; set; }
 
         [Required]
@@ -43,5 +43,8 @@ namespace FPTBOOK_1670_.Models
         public virtual Author Author { get; set; }
 
         public virtual Category Category { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

@@ -1,0 +1,138 @@
+﻿@model FPTBOOK_1670_.Models.Cart
+
+@{
+    ViewBag.Title = "ShowToCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model != null)
+{
+
+    <h1 style="margin-top:20px;text-align:center;font-size:20px">Shopping Cart</h1>
+    <hr />
+    <table style="margin-top:30px" width="100%">
+        <thead style="text-align:center; font-weight:bold">
+            <tr>
+                <th>Delete</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Sum</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                double total = item._shopping_product.Price * item._shopping_quantity;
+
+                <tr style="text-align:center">
+                    <td>
+                        <div>
+                            <a href="@Url.Action("Delete", "ShoppingCart", new { id = item._shopping_product.BookID })">
+                                <i class="fa fa-remove" style="color: rgb(3,3,3);font-size: 19px;"></i>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <img src="~/BookImage/@Url.Content(item._shopping_product.UrlImage)" style=" width:60px; height:70px;margin-top:10px" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item._shopping_product.BookName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item._shopping_product.Price)
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("UpdateQuantity", "ShoppingCart"))
+                        {
+                            <div style="width: 100%">
+                                <input type="hidden" value="@item._shopping_product.BookID" name="ID_Product" />
+                                <input type="number" style="width: 90px;" value="@item._shopping_quantity" name="Quantity" min="1" />
+                            </div>
+
+                            <div style="width: 100%;">
+                                <input type="submit" class="btn btn-outline-primary" style="margin-top: 10px" value="Update" />
+                            </div>
+                        }
+                    </td>
+
+                    <td>
+                        @total
+                    </td>
+                </tr>
+            }
+
+            <tr>
+                <td colspan="5" style="font-size: 26px;text-align: center;font-weight: bold;">Total:</td>
+
+                <td style="font-weight: bold;font-size: 23px; text-align:center">@Model.TotalPrice() $</td>
+            </tr>
+        </tbody>
+
+
+    </table>
+
+
+}
+<hr />
+
+
+
+<h2 style="text-align:center;margin-bottom:20px;margin-top:50px;font-size:30px">Checkout</h2>
+<table align="" style="margin-left:15%" width="100%">
+    @using (Html.BeginForm("Checkout", "ShoppingCart", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+    {
+        //dung moi ra dc form
+        @Html.ValidationSummary(true)
+        <tr style="height:50px">
+            <td style="font-weight:bold">
+                Username:
+            </td>
+            <td>
+                <input class="form-control" type="text" style="width:500px;font-size:20px;background-color:#E5E2D9" name="checkoutUsername" value="@Session["Username"]" readonly>
+            </td>
+
+        </tr>
+
+
+
+        <tr style="height:50px">
+            <td style="font-weight:bold">
+                Address:
+            </td>
+            <td>
+                <input class="form-control" type="text" style="width:500px;font-size:20px" name="checkoutAddress" placeholder=" Enter address" value="@Session["Phone"]" required autofocus>
+            </td>
+        </tr>
+
+        <tr style="height:50px">
+            <td style="font-weight:bold">
+                Phone:
+            </td>
+            <td>
+                <input class="form-control" type="text" style="width:500px;font-size:20px" name="checkoutPhone" placeholder=" Enter phone" required>
+            </td>
+
+        </tr>
+
+        <tr style="height:50px">
+            <td style="font-weight:bold">
+                Total
+            </td>
+            <td>
+                <input class="form-control" type="text" style="width: 500px; font-size: 20px; background-color: #E5E2D9" name="checkoutTotal" value="@Model.TotalPrice()" readonly>
+            </td>
+
+        </tr>
+
+        <tr style="height:50px">
+            <td>
+            </td>
+            <td>
+                <input type="submit" value="Order" class="btn btn-success" />
+            </td>
+        </tr>
+    }
+</table>
+

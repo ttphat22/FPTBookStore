@@ -1,0 +1,97 @@
+﻿@model FPTBOOK_1670_.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 style="text-align:center">Order Details</h2>
+
+<div style="margin-left:30%">
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Account.Fullname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Account.Fullname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+</div>
+
+<table class="table">
+    <thead>
+
+        <tr>
+            <th>Image</th>
+            <th class="text-center">Book name</th>
+            <th class="text-center">Price</th>
+            <th>Quantity</th>
+            <th>Total price</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderDetails)
+        {
+            <tr>
+                <td><img style="width: 70px;height: 80px;" src="~/BookImage/@item.Book.UrlImage"></td>
+                <td class="text-center">@item.Book.BookName<br></td>
+                <td class="text-center">$ @item.Book.Price</td>
+                <td style="width: 108.6px;">@item.Quantity</td>
+                <td>$ @item.AmountPrice</td>
+            </tr>
+        }
+        <tr>
+            <td colspan="4" style="font-size: 26px;text-align: right;font-weight: bold">Total:</td>
+            <td colspan="1" style="font-weight: bold;font-size: 23px;">$ @Model.TotalPrice</td>
+        </tr>
+    </tbody>
+</table>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderID }, new { @class = "button" })
+    @Html.ActionLink("Back to List", "Index", "Orders", null, new { @class = "button" })
+</p>

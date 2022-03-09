@@ -30,8 +30,8 @@
                                 }
                                 else
                                 {
-                                    <li class="last"><div class="button-t"><span>@Html.ActionLink("Hello " + Session["Username"],"Update","User")</span></div></li>
-                                    <li class="last"><div class="button-t"><span>@Html.ActionLink("Logout","Logout","User")</span></div></li>
+                                    <li class="last"><div class="button-t"><span>@Html.ActionLink("Hello " + Session["Username"], "Update", "User")</span></div></li>
+                                    <li class="last"><div class="button-t"><span>@Html.ActionLink("Logout", "Logout", "User")</span></div></li>
 
                                 }
                             </ul>
@@ -52,12 +52,12 @@
                             <div class="search">
                                 @using (Html.BeginForm("Search", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
                                 {
-                                    @Html.TextBox("Search", "", new { placeholder = "  Search...", @style = "border-radius:20px" });
+                                    @Html.TextBox("Search", "", new { placeholder = "Search...", @style = "border-radius:20px;padding-left:20px" });
 
                                     <button class="gray-button" type="submit" style="background-color: #fff; border: none; margin-left: -42px; border-radius: 100%">Search</button>
                                 }
 
-                                
+
 
                             </div>
                             <div class="clear"></div>

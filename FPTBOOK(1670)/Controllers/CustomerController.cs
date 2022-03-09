@@ -34,32 +34,45 @@ namespace MVC_FPT.Controllers
             var fullname = collection["FullName"];
             var email = collection["Email"];
             var password = collection["Password"];
+            var conPass = collection["ConfirmPassword"];
             var address = collection["Address"];
             var phone = collection["Phone"];
 
             if (String.IsNullOrEmpty(username))
             {
-                ViewData["Error1"] = "Full name must be not blank ";
+                ViewData["Error01"] = "User name must be not blank ";
             }
-            if (String.IsNullOrEmpty(fullname))
+            else if (String.IsNullOrEmpty(fullname))
             {
                 ViewData["Error1"] = "Full name must be not blank ";
             }
-            if (String.IsNullOrEmpty(email))
+            else if (String.IsNullOrEmpty(email))
             {
                 ViewData["Error2"] = "Email must be not blank ";
             }
-            if (String.IsNullOrEmpty(password))
+            else if (String.IsNullOrEmpty(password))
             {
                 ViewData["Error3"] = "Password must be not blank ";
             }
-            if (String.IsNullOrEmpty(address))
+            else if (password.Length < 6)
+            {
+                ViewData["Error3"] = "Password must be at least 6 characters long.";
+            }
+            else if (password != conPass)
+            {
+                ViewData["Error03"] = "Password and Confirm password do not match";
+            }
+            else if (String.IsNullOrEmpty(address))
             {
                 ViewData["Error4"] = "Address must be not blank ";
             }
-            if (String.IsNullOrEmpty(phone))
+            else if (String.IsNullOrEmpty(phone))
             {
                 ViewData["Error5"] = "Phone must be not blank ";
+            }
+            else if (phone.Length < 11)
+            {
+                ViewData["Error5"] = "Phone must be at least 10 characters long.";
             }
             else
             {
@@ -128,6 +141,10 @@ namespace MVC_FPT.Controllers
                         return RedirectToAction("Index", "AdminAccount");
                     }
                 }
+                else
+                {
+                    return Content("<script>alert('Username or Password is not correct');window.location.replace('/User/Login');</script>");
+                }
             }
             return View();
         }
@@ -153,17 +170,17 @@ namespace MVC_FPT.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Update(Account _account)
         {
-            
-                db.Accounts.Attach(_account);
 
-                db.Entry(_account).Property(a => a.Fullname).IsModified = true;
-                db.Entry(_account).Property(a => a.Email).IsModified = true;
-                db.Entry(_account).Property(a => a.Phone).IsModified = true;
-                db.Entry(_account).Property(a => a.Address).IsModified = true;
+            db.Accounts.Attach(_account);
 
-                db.SaveChanges();                
-            
-            return RedirectToAction("Index","Home");
+            db.Entry(_account).Property(a => a.Fullname).IsModified = true;
+            db.Entry(_account).Property(a => a.Email).IsModified = true;
+            db.Entry(_account).Property(a => a.Phone).IsModified = true;
+            db.Entry(_account).Property(a => a.Address).IsModified = true;
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult ChangePass()
@@ -191,15 +208,15 @@ namespace MVC_FPT.Controllers
             else
             {
                 objAccount.Password = HashMD5(account.NewPassword);
-                
+
 
                 db.Accounts.Attach(objAccount);
                 db.Entry(objAccount).Property(a => a.Password).IsModified = true;
                 db.SaveChanges();
 
-            
+
             }
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public static string HashMD5(string str)

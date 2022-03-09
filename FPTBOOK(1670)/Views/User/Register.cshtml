@@ -15,7 +15,7 @@
             </td>
             <td>
                 @Html.TextBox("Username")
-                @ViewData["Error1"]
+                @ViewData["Error01"]
             </td>
 
         </tr>
@@ -45,6 +45,16 @@
             <td>
                 @Html.Password("Password")
                 @ViewData["Error3"]
+            </td>
+        </tr>
+
+        <tr style="height:50px">
+            <td>
+                Confirm Password:
+            </td>
+            <td>
+                @Html.Password("ConfirmPassword")
+                @ViewData["Error03"]
             </td>
         </tr>
         <tr style="height:50px">
