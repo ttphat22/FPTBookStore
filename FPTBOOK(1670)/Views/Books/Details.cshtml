@@ -51,20 +51,13 @@
             @Html.DisplayFor(model => model.Price)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Image)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.UrlImage)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.UrlImage)
+            <img src="~/BookImage/@Model.UrlImage" style="height:80px;width:70px" />
         </dd>
 
         <dt>

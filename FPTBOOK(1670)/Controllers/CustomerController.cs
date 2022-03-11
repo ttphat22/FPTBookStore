@@ -11,7 +11,7 @@ namespace MVC_FPT.Controllers
 {
     public class UserController : Controller
     {
-        //Tao 1 doi tuong quan ly CSDL
+        //Create a database object
         Model1 db = new Model1();
 
         // GET: User
@@ -27,68 +27,22 @@ namespace MVC_FPT.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(FormCollection collection, Account kh)
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(Account kh)
         {
-            //gan gia tri vao form
-            var username = collection["Username"];
-            var fullname = collection["FullName"];
-            var email = collection["Email"];
-            var password = collection["Password"];
-            var conPass = collection["ConfirmPassword"];
-            var address = collection["Address"];
-            var phone = collection["Phone"];
-
-            if (String.IsNullOrEmpty(username))
+            if (ModelState.IsValid)
             {
-                ViewData["Error01"] = "User name must be not blank ";
-            }
-            else if (String.IsNullOrEmpty(fullname))
-            {
-                ViewData["Error1"] = "Full name must be not blank ";
-            }
-            else if (String.IsNullOrEmpty(email))
-            {
-                ViewData["Error2"] = "Email must be not blank ";
-            }
-            else if (String.IsNullOrEmpty(password))
-            {
-                ViewData["Error3"] = "Password must be not blank ";
-            }
-            else if (password.Length < 6)
-            {
-                ViewData["Error3"] = "Password must be at least 6 characters long.";
-            }
-            else if (password != conPass)
-            {
-                ViewData["Error03"] = "Password and Confirm password do not match";
-            }
-            else if (String.IsNullOrEmpty(address))
-            {
-                ViewData["Error4"] = "Address must be not blank ";
-            }
-            else if (String.IsNullOrEmpty(phone))
-            {
-                ViewData["Error5"] = "Phone must be not blank ";
-            }
-            else if (phone.Length < 11)
-            {
-                ViewData["Error5"] = "Phone must be at least 10 characters long.";
-            }
-            else
-            {
-                //gan gia tri vao Data
-                kh.Fullname = fullname;
-                kh.Username = username;
-                kh.Email = email;
-                kh.Password = HashMD5(password);
-                kh.Address = address;
-                kh.Phone = phone;
+                kh.Password = HashMD5(kh.Password);
+                db.Configuration.ValidateOnSaveEnabled = false;
                 db.Accounts.Add(kh);
                 db.SaveChanges();
                 return RedirectToAction("Login");
             }
+            else
+            {
+                return View();
+            }
 
-            return this.Register();
         }
 
         [HttpGet]
@@ -208,15 +162,13 @@ namespace MVC_FPT.Controllers
             else
             {
                 objAccount.Password = HashMD5(account.NewPassword);
-
-
+                objAccount.ConfirmPassword = objAccount.Password;
                 db.Accounts.Attach(objAccount);
                 db.Entry(objAccount).Property(a => a.Password).IsModified = true;
                 db.SaveChanges();
-
-
+                return Content("<script>alert('Password change successfully');window.location.replace('/');</script>");
             }
-            return RedirectToAction("Index", "Home");
+            return View();
         }
 
         public static string HashMD5(string str)

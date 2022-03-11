@@ -57,26 +57,31 @@ namespace FPTBOOK_1670_.Controllers
                 if (image != null && image.ContentLength > 0)
                 {
                     string pic = Path.GetFileName(image.FileName);
+
+                    string extension = Path.GetExtension(image.FileName);
+
                     string path = Path.Combine(Server.MapPath("~/BookImage/"), pic);
-                    image.SaveAs(path);
 
-                    book.UrlImage = pic;
-                    db.Books.Add(book);
-                    db.SaveChanges();
+                    if (extension.ToLower() == ".jpg" || extension.ToLower() == ".png" || extension.ToLower() == ".jpeg")
+                    {
+                        image.SaveAs(path);
 
-                    return RedirectToAction("Index");
+                        book.UrlImage = pic;
+                        db.Books.Add(book);
+                        db.SaveChanges();
+
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        ViewBag.Extension = "File is invalid";
+                    }
                 }
                 else
                 {
-               
                     return View();
                 }
-
-                //db.Books.Add(book);
-                //db.SaveChanges();
-                //return RedirectToAction("Index");
             }
-
             ViewBag.AuthorID = new SelectList(db.Authors, "AuthorID", "AuthorName", book.AuthorID);
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", book.CategoryID);
             return View(book);
@@ -115,18 +120,26 @@ namespace FPTBOOK_1670_.Controllers
                 {
                     string pic = Path.GetFileName(image.FileName);
                     string path = Path.Combine(Server.MapPath("~/BookImage/"), pic);
-                    string oldPath = Request.MapPath(Session["oldPath"].ToString());
-                    image.SaveAs(path);
-
-                    book.UrlImage = pic;
-
-                    db.Entry(book).State = EntityState.Modified;
-                    if (System.IO.File.Exists(oldPath))
+                    string oldPath = Request.MapPath(Session["imgPath"].ToString());
+                    string extension = Path.GetExtension(image.FileName);
+                    if (extension.ToLower() == ".jpg" || extension.ToLower() == ".png" || extension.ToLower() == ".jpeg")
                     {
-                        System.IO.File.Delete(oldPath);
+                        image.SaveAs(path);
+
+                        book.UrlImage = pic;
+
+                        db.Entry(book).State = EntityState.Modified;
+                        if (System.IO.File.Exists(oldPath))
+                        {
+                            System.IO.File.Delete(oldPath);
+                        }
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
                     }
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    else
+                    {
+                        ViewBag.Extension = "File is invalid.";
+                    }
                 }
                 else
                 {

@@ -1,21 +1,24 @@
-﻿@{
+﻿@model FPTBOOK_1670_.Models.Account
+
+@{
     ViewBag.Title = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2 style="text-align:center;margin-bottom:20px;margin-top:20px;font-size:30px">Register</h2>
 <table align="center" style="margin-left:30%">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Register", "User", FormMethod.Post))
     {
         //dung moi ra dc form
-        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <tr style="height:50px">
             <td>
                 Username:
             </td>
             <td>
-                @Html.TextBox("Username")
-                @ViewData["Error01"]
+                @Html.TextBoxFor(model => model.Username, new { @required = "" })
+                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
             </td>
 
         </tr>
@@ -25,8 +28,9 @@
                 Full Name:
             </td>
             <td>
-                @Html.TextBox("FullName")
-                @ViewData["Error1"]
+                @Html.TextBoxFor(model => model.Fullname, new { @required = "" })
+                @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger" })
+
             </td>
         </tr>
         <tr style="height:50px">
@@ -34,8 +38,9 @@
                 Email:
             </td>
             <td>
-                @Html.TextBox("Email")
-                @ViewData["Error2"]
+                @Html.TextBoxFor(model => model.Email, new { @required = "" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
             </td>
         </tr>
         <tr style="height:50px">
@@ -43,8 +48,8 @@
                 Password:
             </td>
             <td>
-                @Html.Password("Password")
-                @ViewData["Error3"]
+                @Html.PasswordFor(model => model.Password, new { @required = "" })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </td>
         </tr>
 
@@ -53,8 +58,8 @@
                 Confirm Password:
             </td>
             <td>
-                @Html.Password("ConfirmPassword")
-                @ViewData["Error03"]
+                @Html.PasswordFor(model => model.ConfirmPassword, new { @required = "" })
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
             </td>
         </tr>
         <tr style="height:50px">
@@ -62,8 +67,8 @@
                 Address:
             </td>
             <td>
-                @Html.TextBox("Address")
-                @ViewData["Error4"]
+                @Html.TextBoxFor(model => model.Address, new { @required = "" })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
             </td>
         </tr>
 
@@ -72,8 +77,10 @@
                 Phone:
             </td>
             <td>
-                @Html.TextBox("Phone")
-                @ViewData["Error5"]
+                @Html.TextBoxFor(model => model.Phone, new { @required = "" })
+
+                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+
             </td>
 
         </tr>

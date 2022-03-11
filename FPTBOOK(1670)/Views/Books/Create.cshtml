@@ -7,10 +7,10 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm("Create", "Books", FormMethod.Post, new {enctype="multipart/form-data"})) 
+@using (Html.BeginForm("Create", "Books", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Book</h4>
         <hr />
@@ -67,11 +67,15 @@
             @Html.LabelFor(model => model.UrlImage, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input class="form-control" type="file" name="image" id="image" required="" />
+                @if (ViewBag.Extension != null)
+                {
+                    <span class="text-danger" style="margin-left:30px;font-size:20px">@ViewBag.Extension</span>
+                }
                 @Html.ValidationMessageFor(model => model.UrlImage, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.ShortDesc, htmlAttributes: new { @class = "control-label col-md-2" })
